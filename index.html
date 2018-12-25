@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Timetrix Prototype</title>
+</head>
+<body>
+    <div class="main">
+            <div class="tasks">
+                <input class="main--Input" type="text" placeholder="Enter a new task" data-bind="value: TaskName" />
+                <button class="main--Button" data-bind="click: AddTask">Add Task</button>
+                <!-- ko if: Metrics().length > 0-->
+                    <div class="tasks--AddMetrics">
+                        <select class="main--Dropdown" 
+                        data-bind="options: Metrics,
+                        optionsText: 'Name',
+                        value: TaskMetric">
+                        </select>
+                        <button data-bind="click: AddTaskMetric">+</button>
+                    </div>
+                    <div class="tasks--TaskMetrics">
+                        <!-- ko foreach: TaskMetrics -->
+                            <div class="tasks--TaskMetric">
+                                <span data-bind="text: Name()"></span>
+                            </div>
+                        <!-- /ko -->
+                    </div>
+                <!-- /ko -->
+                <div class="tasks--Area">
+                    <ul class="tasks--List">
+                        <!-- ko if: Tasks().length > 0-->
+                            <!-- ko foreach: Tasks -->
+                                <div class="tasks--Task">
+                                    <span>Name: <span data-bind="text: $data.Name"></span></span>
+                                    <span>Completed: <span data-bind="text: $data.Completed"></span> <button data-bind="click: $data.CompleteTask">Complete</button></span>
+                                    <ul data-bind="foreach: $data.Metrics">
+                                        <li><span data-bind="text: Name()"></span> <input type="text" data-bind="value: Value" /></li>
+                                    </ul>
+                                </div>
+                            <!-- /ko -->
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </div>
+            <div class="metrics">
+                <input class="main--Input" type="text" placeholder="Enter a new metric" data-bind="value: MetricName" />
+                <button class="main--Button" data-bind="click: AddMetric">Add Metric</button>
+                <div class="metrics--Area">
+                    <ul class="metricss--List">
+                        <!-- ko if: Metrics().length > 0-->
+                            <!-- ko foreach: Metrics -->
+                                <li>
+                                    <span>Name: <span data-bind="text: $data.Name"></span></span>
+                                    <span>Value: <span data-bind="text: $data.LastValue"></span> <span data-bind="text: $data.PerformanceText"></span></span>
+                                </li>
+                            <!-- /ko -->
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </div>
+    </div>
+    
+    <script src="src/knockout-min.js"></script>
+    <script src="src/app.js"></script>
+</body>
+</html>
